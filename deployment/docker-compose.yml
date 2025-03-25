@@ -1,0 +1,32 @@
+
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - kotlin_blitz
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:7.0
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - kotlin_blitz
+    ports:
+      - "6379:6379"
+
+networks:
+  kotlin_blitz:
+    external: true
+
+volumes:
+  mongo_data:
