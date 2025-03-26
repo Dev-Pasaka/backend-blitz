@@ -36,7 +36,8 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Push Docker image to Docker Hub
-        run: docker push ${DOCKER_HUB_USERNAME}/backend-blitz:latest
+        run: docker push $DOCKER_HUB_USERNAME/backend-blitz:latest
+
 
       - name: Clean up
         run: |
