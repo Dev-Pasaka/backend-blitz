@@ -1,13 +1,15 @@
 package application.plugins
 
+import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.server.plugins.contentnegotiation.*
+import java.text.DateFormat
 
 fun Application.configureSerialization() {
-    routing {
-        get("/json/kotlinx-serialization") {
-                call.respond(mapOf("hello" to "world"))
-            }
+    install(ContentNegotiation) {
+        gson {
+            setDateFormat(DateFormat.LONG, DateFormat.SHORT)
+            setPrettyPrinting()
+        }
     }
 }

@@ -17,7 +17,7 @@ class RedisRepositoryImpl(
         true
     }
 
-    override suspend  fun get(key: String): String? = withContext(Dispatchers.IO){
+    override suspend fun get(key: String): String? = withContext(Dispatchers.IO){
         redis.client.use { client ->
             return@withContext client.get(key)
         }

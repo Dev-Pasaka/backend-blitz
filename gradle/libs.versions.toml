@@ -35,6 +35,12 @@ mongodb-serializer = { module = "org.mongodb:bson-kotlinx", version.ref = "mongo
 jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt"}
 #Redis
 ktor-redis = {  module = "redis.clients:jedis", version.ref = "redis" }
+#Ktor client
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
+ktor-client-loggin = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-version" }
+gson = {module = "io.ktor:ktor-serialization-gson", version.ref = "ktor-version"}
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

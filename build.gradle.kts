@@ -9,7 +9,7 @@ group = "com.blitz"
 version = "0.0.1"
 
 application {
-    mainClass = "com.blitz.ApplicationKt"
+    mainClass = "application.ApplicationKt"
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -19,6 +19,49 @@ repositories {
     mavenCentral()
     maven { url = uri("https://packages.confluent.io/maven/") }
 }
+
+
+tasks {
+    create("stage").dependsOn("installDist")
+}
+
+ktor {
+    fatJar {
+        archiveFileName.set("backend-blitz.jar")
+    }
+}
+
+tasks.shadowJar {
+    setProperty("zip64", true)
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.blitz.application.ApplicationKt"
+    }
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+ktor {
+    docker {
+        jreVersion.set(JavaVersion.VERSION_21)
+        localImageName.set("pascarl/backend-blitz")
+        this.imageTag.set("latest")
+        portMappings.set(
+            listOf(
+                DockerPortMapping(
+                    8080,
+                    8080,
+                    DockerPortMappingProtocol.TCP
+                )
+            )
+        )
+    }
+}
+
 
 dependencies {
     implementation(libs.ktor.server.rate.limiting)
@@ -40,6 +83,11 @@ dependencies {
     implementation(libs.mongodb.serializer)
     implementation(libs.jbcrypt)
     implementation(libs.ktor.redis)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.loggin)
+    implementation(libs.gson)
+    implementation(libs.ktor.client.content.negotiation)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 
