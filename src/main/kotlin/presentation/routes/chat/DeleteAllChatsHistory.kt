@@ -1,19 +1,17 @@
-package presentation.routes
+package presentation.routes.chat
 
 import application.plugins.extractUserId
 import io.ktor.server.auth.*
-import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.util.reflect.*
-import presentation.dtos.requests.UpdateUserReq
-import presentation.services.UserService
+import presentation.services.ChatService
 
-fun Route.updateUser(userService: UserService) {
+
+fun Route.deleteAllChatsHistory(chatService: ChatService) {
     authenticate {
-        put {
+        delete {
             val userId = call.extractUserId()
-            val body = call.receive<UpdateUserReq>()
-            val result = userService.updateUser(userId, body)
+            val result = chatService.deleteAllChatHistory(userId)
             call.respond(
                 typeInfo = typeInfo<Any>(),
                 message = result

@@ -1,20 +1,18 @@
-package presentation.routes
+package presentation.routes.chat
 
 import application.plugins.extractUserId
-import common.utils.Type
-import common.utils.logger
 import io.ktor.server.auth.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.reflect.*
-import presentation.services.UserService
+import presentation.services.ChatService
 
 
-fun Route.getUserProfile(userService: UserService){
+fun Route.getAllChats(chatService: ChatService) {
     authenticate {
-        this.attributes.toString() logger(Type.INFO)
         get {
             val userId = call.extractUserId()
-            val result = userService.getUserProfile(userId)
+            val result = chatService.getAllChatsHistory(userId)
             call.respond(
                 typeInfo = typeInfo<Any>(),
                 message = result

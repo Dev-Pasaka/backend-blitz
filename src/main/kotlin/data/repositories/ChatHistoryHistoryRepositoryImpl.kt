@@ -40,13 +40,13 @@ class ChatHistoryHistoryRepositoryImpl(
     override suspend fun getChat(id: String): Resource<Any> = withContext(Dispatchers.IO) {
         val chat = chatHistoryCollection.find(Filters.eq(ChatHistoryEntity::id.name, id)).firstOrNull()
             ?: return@withContext Resource.Error(message = "Chat not found")
-        return@withContext Resource.Success(message = "Chat found", data = chat)
+        return@withContext Resource.Success(message = "Chat found", data = chat.toChat())
     }
 
     override suspend fun getAllChat(userId:String): Resource<Any> = withContext(Dispatchers.IO) {
         val chats = chatHistoryCollection.find(
             Filters.eq(ChatHistoryEntity::userId.name, userId)
         ).toList()
-        return@withContext Resource.Success(message = "Chats found", data = chats)
+        return@withContext Resource.Success(message = "Chats found", data = chats.map { it.toChat() })
     }
 }

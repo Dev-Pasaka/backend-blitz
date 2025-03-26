@@ -1,4 +1,4 @@
-package presentation.routes
+package presentation.routes.user
 
 import io.ktor.server.request.*
 import io.ktor.server.routing.*

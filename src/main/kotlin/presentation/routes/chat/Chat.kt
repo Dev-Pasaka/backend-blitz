@@ -1,4 +1,4 @@
-package presentation.routes
+package presentation.routes.chat
 
 import application.plugins.extractUserId
 import io.ktor.server.auth.*

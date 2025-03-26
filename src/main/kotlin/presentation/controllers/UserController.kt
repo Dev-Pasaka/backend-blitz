@@ -1,10 +1,10 @@
 package presentation.controllers
 
 import io.ktor.server.routing.*
-import presentation.routes.getUserProfile
-import presentation.routes.signIn
-import presentation.routes.signUp
-import presentation.routes.updateUser
+import presentation.routes.user.getUserProfile
+import presentation.routes.user.signIn
+import presentation.routes.user.signUp
+import presentation.routes.user.updateUser
 import presentation.services.UserService
 
 fun Route.userController(userService: UserService) {

@@ -16,6 +16,10 @@ val serviceModules = module {
 
     single {
         ChatService(
+            get(),
+            get(),
+            get(),
+            get(),
             get()
         )
     }
