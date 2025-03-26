@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main  # Build on pull requests to main branch
+  push:
+    branches:
+      - main  # Build on pull requests to main branch
 
 jobs:
   build-and-push:
