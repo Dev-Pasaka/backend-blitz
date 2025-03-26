@@ -1,0 +1,7 @@
+2025-03-26 17:02:19.990 [main]  INFO  [Koin] - Started 14 definitions in 3.148048 ms
+2025-03-26 17:02:22.213 [main]  INFO  kotlin_blitz - io.ktor.util.ConcurrentSafeAttributes@6ecdbab8
+2025-03-26 17:02:22.217 [main]  INFO  io.ktor.server.Application - Application started in 3.817 seconds.
+2025-03-26 17:02:22.697 [main]  INFO  io.ktor.server.Application - Responding at http://0.0.0.0:8080
+2025-03-26 17:02:35.238 [eventLoopGroupProxy-4-1]  INFO  io.ktor.server.Application - [32m200 OK[m: [36mPOST[m - /user/sign-up in 1551ms
+2025-03-26 17:02:42.597 [eventLoopGroupProxy-4-2]  INFO  io.ktor.server.Application - [32m200 OK[m: [36mGET[m - / in 373ms
+2025-03-26 17:02:43.043 [eventLoopGroupProxy-4-2]  INFO  io.ktor.server.Application - [32m200 OK[m: [36mGET[m - / in 40ms

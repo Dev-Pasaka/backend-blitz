@@ -1,17 +1,19 @@
 package application.plugins
 
+import JWTConfig
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import common.utils.Type
+import common.utils.logger
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 
 fun Application.configureSecurity() {
-    // Please read the jwt property from the config file if you are using EngineMain
-    val jwtAudience = "jwt-audience"
-    val jwtDomain = "https://jwt-provider-domain/"
-    val jwtRealm = "ktor sample app"
-    val jwtSecret = "secret"
+    val jwtAudience = JWTConfig.jwtAudience
+    val jwtIssuer = JWTConfig.jwtIssuer
+    val jwtRealm = JWTConfig.jwtRealm
+    val jwtSecret = JWTConfig.jwtSecret
     authentication {
         jwt {
             realm = jwtRealm
@@ -19,7 +21,7 @@ fun Application.configureSecurity() {
                 JWT
                     .require(Algorithm.HMAC256(jwtSecret))
                     .withAudience(jwtAudience)
-                    .withIssuer(jwtDomain)
+                    .withIssuer(jwtIssuer)
                     .build()
             )
             validate { credential ->
@@ -27,4 +29,17 @@ fun Application.configureSecurity() {
             }
         }
     }
+}
+
+
+fun ApplicationCall.extractUserId(): String {
+    val id =  principal<JWTPrincipal>()
+        ?.payload
+        ?.getClaim("id")
+        ?.asString()
+        ?.removeSurrounding("\"")
+        ?: ""
+    id logger(Type.INFO)
+    return id
+
 }
