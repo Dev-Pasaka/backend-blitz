@@ -7,12 +7,15 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
+import presentation.controllers.chatController
 import presentation.controllers.userController
+import presentation.services.ChatService
 import presentation.services.UserService
 
 
 fun Application.configureRouting() {
     val userService:UserService by inject()
+    val chatService:ChatService by inject()
     val redis: RedisRepository by inject()
     install(StatusPages) {
         exception<Throwable> { call, cause ->
@@ -27,6 +30,7 @@ fun Application.configureRouting() {
             call.respondText("Hello World! $result")
         }
         userController(userService)
+        chatController(chatService)
 
     }
 }

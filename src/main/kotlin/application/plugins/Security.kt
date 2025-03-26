@@ -39,7 +39,6 @@ fun ApplicationCall.extractUserId(): String {
         ?.asString()
         ?.removeSurrounding("\"")
         ?: ""
-    id logger(Type.INFO)
     return id
 
 }
