@@ -1,0 +1,46 @@
+name: Deploy to EC2
+
+on:
+  workflow_run:
+    workflows: ["Docker Build and Push"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        run: |
+          # Create the .ssh directory and set appropriate permissions
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          # Add the private key from GitHub Secrets
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Add the EC2 host to known_hosts to avoid prompt
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Docker Compose to EC2
+        run: |
+          # SSH into EC2 and execute deployment commands
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e # Exit immediately if a command fails
+            # Ensure user is part of the docker group
+            sudo usermod -aG docker $USER
+            newgrp docker
+
+            # Navigate to the deployment directory
+            cd backend-blitz-prod 
+
+            # Pull the latest image and restart services
+            docker compose pull
+            docker compose down
+            docker compose up -d
+          EOF

@@ -1,0 +1,44 @@
+
+
+services:
+  backend-blitz-prod:
+    depends_on:
+      - mongodb
+    image: pascarl/backend-blitz:latest
+    container_name: backend-blitz
+    ports:
+      - "8080:8080"
+    env_file:
+      - "/home/dev-pasaka/Downloads/kotlin/prod.env"
+    restart: unless-stopped
+    networks:
+      - kotlin-blitz-prod
+    volumes:
+      - ./app_data:/app_data
+
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb-prod
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - kotlin-blitz-prod
+
+  redis:
+    image: redis:7.0
+    container_name: redis-prod
+    restart: unless-stopped
+    networks:
+      - kotlin-blitz-prod
+
+networks:
+  kotlin-blitz-prod:
+    external: true
+
+volumes:
+  mongo_data:

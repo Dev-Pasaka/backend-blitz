@@ -1,5 +1,7 @@
 package application.plugins
 
+import data.repositories.RedisRepositoryImpl
+import domain.repositories.RedisRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
@@ -12,6 +14,7 @@ import presentation.services.UserService
 
 fun Application.configureRouting() {
     val userService:UserService by inject()
+    val redis: RedisRepository by inject()
     install(StatusPages) {
         exception<Throwable> { call, cause ->
             call.respondText(text = "500: ${cause.printStackTrace()}" , status = HttpStatusCode.InternalServerError)
@@ -20,7 +23,9 @@ fun Application.configureRouting() {
     routing {
 
         get("/") {
-            call.respondText("Hello World!")
+            redis.set(key = "test", value = "test")
+            val result = redis.get("test")
+            call.respondText("Hello World! $result")
         }
         userController(userService)
 

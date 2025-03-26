@@ -37,7 +37,7 @@ tasks.shadowJar {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "com.blitz.application.ApplicationKt"
+        attributes["Main-Class"] = "application.ApplicationKt"
     }
     from({
         configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
@@ -52,10 +52,10 @@ ktor {
         this.imageTag.set("latest")
         portMappings.set(
             listOf(
-                DockerPortMapping(
+                io.ktor.plugin.features.DockerPortMapping(
                     8080,
                     8080,
-                    DockerPortMappingProtocol.TCP
+                    io.ktor.plugin.features.DockerPortMappingProtocol.TCP
                 )
             )
         )
