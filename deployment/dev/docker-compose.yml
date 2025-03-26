@@ -3,7 +3,7 @@
 services:
   mongodb:
     image: mongo:6.0
-    container_name: mongodb
+    container_name: mongodb-dev
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -11,21 +11,21 @@ services:
     volumes:
       - mongo_data:/data/db
     networks:
-      - kotlin_blitz
+      - kotlin_blitz-dev
     ports:
       - "27017:27017"
 
   redis:
     image: redis:7.0
-    container_name: redis
+    container_name: redis-dev
     restart: unless-stopped
     networks:
-      - kotlin_blitz
+      - kotlin_blitz-dev
     ports:
       - "6379:6379"
 
 networks:
-  kotlin_blitz:
+  kotlin_blitz-dev:
     external: true
 
 volumes:

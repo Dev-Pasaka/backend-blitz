@@ -1,13 +1,23 @@
 
 
 services:
-  backend-blitz-prod:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-prod
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: unless-stopped
+    networks:
+      - kotlin-blitz-prod
+
+  backend-blitz:
     depends_on:
       - mongodb
+      - nginx
     image: pascarl/backend-blitz:latest
-    container_name: backend-blitz
-    ports:
-      - "8080:8080"
+    container_name: backend-blitz-prod
     env_file:
       - "/home/dev-pasaka/Downloads/kotlin/prod.env"
     restart: unless-stopped

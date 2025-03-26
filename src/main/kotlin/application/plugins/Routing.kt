@@ -1,6 +1,5 @@
 package application.plugins
 
-import data.repositories.RedisRepositoryImpl
 import domain.repositories.RedisRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
