@@ -3,10 +3,7 @@ name: Docker Build and Push
 on:
   pull_request:
     branches:
-      - main
-  push:
-    branches:
-      - main
+      - main  # Build on pull requests to main branch
 
 jobs:
   build-and-push:
@@ -34,6 +31,9 @@ jobs:
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Push Docker image to Docker Hub
         run: docker push ${DOCKER_HUB_USERNAME}/backend-blitz:latest
