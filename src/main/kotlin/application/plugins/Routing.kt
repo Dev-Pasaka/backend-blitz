@@ -8,6 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import presentation.controllers.chatController
+import presentation.controllers.pageController
 import presentation.controllers.userController
 import presentation.services.ChatService
 import presentation.services.UserService
@@ -31,6 +32,6 @@ fun Application.configureRouting() {
         }
         userController(userService)
         chatController(chatService)
-
+        pageController()
     }
 }

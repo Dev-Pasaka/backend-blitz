@@ -12,6 +12,7 @@ fun main() {
 
 fun Application.module() {
     configureKoin()
+    cors()
     configureAdministration()
     configureSockets()
     configureSerialization()
