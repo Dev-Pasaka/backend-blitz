@@ -37,7 +37,7 @@ jobs:
             newgrp docker
 
             # Navigate to the deployment directory
-            cd backend-blitz-prod 
+            cd backend-blitz-staging 
 
             # Pull the latest image and restart services
             docker compose pull
