@@ -48,7 +48,7 @@ tasks.withType<Jar> {
 ktor {
     docker {
         jreVersion.set(JavaVersion.VERSION_21)
-        localImageName.set("pascarl/backend-blitz")
+        localImageName.set("pascarl/backend-blitz-staging")
         this.imageTag.set("latest")
         portMappings.set(
             listOf(
