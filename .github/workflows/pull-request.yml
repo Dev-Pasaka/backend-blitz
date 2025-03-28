@@ -2,12 +2,13 @@ on:
   push:
     branches: [presentation]
   pull_request:
-    branches: [main]
+    branches: [staging]
 
 
 
 jobs:
-  build:
+  test:
+    name: Unit tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
